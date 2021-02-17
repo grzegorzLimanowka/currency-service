@@ -18,13 +18,19 @@ class Api:
         break
     data = json.loads(api.text)
     rates = data['rates']
-    print(rates)
+    #print(rates)
 
     def __init__(self, base):
         self.base=base
-    def Check(self, base):
-
-        print("base")
+    def Check(self, filter):
+        tablica=[]
+        #print(filter)
+        try:
+            for x in range(len(filter)):
+               tablica.append(str(filter[x]) +" : " + str(self.rates[filter[x]]))
+        except Exception as E:
+            tablica.append("Something went wrong")
+        return(tablica)
 
     def Convert(self, amount, towhat):
         return amount/self.rates[self.base]*self.rates[towhat]

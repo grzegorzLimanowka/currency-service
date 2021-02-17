@@ -10,7 +10,7 @@ logging.basicConfig(filename='logs.log', level=logging.DEBUG, format='%(asctime)
 logging.info("Server starts")
 
 HOST = '192.168.0.40'
-PORT = 33000
+PORT = 33001
 BUFFER = 1024
 
 
@@ -40,13 +40,13 @@ try:
         elif data['code'] == 'check_conversion_rate_req':
 
             print("tupowinnobycmojeapi:")
-            print(server_api.Check(truedata['currency']))
+            print(server_api.Check(truedata['base_currency_code']))
             data['code'] = 'check_conversion_rate_res'
-            #data['data'] = {"base_currency_code": "false", "id":userid['id']}
+            data['data'] = {"rates": server_api.Check(truedata['filter'])}#, "id":userid['id']}
 
         elif data['code'] == 'convert_currency_req':
             data['code'] = 'convert_currency_res'
-            data['data'] = {"converted_amount": server_api.Convert(data['amount'],data['convert_to'])}
+            data['data'] = {'Converted_amount': server_api.Convert(data['amount'],data['convert_to'])}
 
         else:
             logging.critical("WRONG CODE")
