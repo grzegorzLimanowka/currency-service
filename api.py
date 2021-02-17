@@ -23,14 +23,13 @@ class Api:
     def __init__(self, base):
         self.base=base
     def Check(self, filter):
-        tablica=[]
+        answer={self.base : self.rates[filter[x]]}
         #print(filter)
-        try:
-            for x in range(len(filter)):
-               tablica.append(str(filter[x]) +" : " + str(self.rates[filter[x]]))
-        except Exception as E:
-            tablica.append("Something went wrong")
-        return(tablica)
+
+        for x in range(len(filter)+1):
+            answer[filter[x]] = self.rates[filter[x]]
+
+        return(answer)
 
     def Convert(self, amount, towhat):
         return amount/self.rates[self.base]*self.rates[towhat]
