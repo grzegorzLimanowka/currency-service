@@ -40,5 +40,5 @@ class Api:
         print("greetings from api")
 
 
-
-
+A=Api("PLN")
+print(A.Check(["EUR", "GBP", "HUF", "CZK"]))
