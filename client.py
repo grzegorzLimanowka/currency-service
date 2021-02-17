@@ -23,6 +23,11 @@ if data['code'] == "check_conversion_rate_req":
     currency = input('Currency: ')
     filter = input('Filter: ')
     data['data'] = {"base_currency_code": currency, "filter": filter}
+elif data['code'] == "check_conversion_rate_req":
+    base_currency_code = input('Currency: ')
+    amount = input('Amount: ')
+    convert_to = input('Convert to: ')
+    data['data'] = {"base_currency_code": base_currency_code, "amount": amount, "convert_to": convert_to}
 else:
     data['data'] = input('Data: ')
 

@@ -30,26 +30,24 @@ try:
 
         truedata=data['data']
        #nibyapi=api.Api("a")
+        server_api = api.Api(truedata['base_currency_code'])
 
         if data['code'] == 'list_all_currencies_req':
-            api.sayhello()
-            mojeapi = api.Api(23)
-            print("tupowinnobycmojeapi:")
-            print(mojeapi.Check("AUD"))
             data['data']=api.Api.rates
+            logging.info("Sent list of currencies")
             #nibyapi.work()
 
         elif data['code'] == 'check_conversion_rate_req':
-            mojeapi = api.Api(23)
-            print("tupowinnobycmojeapi:")
-            print(mojeapi.Check(truedata['currency']))
-            #basecurrency=truedata['base_currency_code']
 
+            print("tupowinnobycmojeapi:")
+            print(server_api.Check(truedata['currency']))
             data['code'] = 'check_conversion_rate_res'
             #data['data'] = {"base_currency_code": "false", "id":userid['id']}
-        elif data['code'] == 'get_all_logged_in_clients':
-            data['code'] = 'get_all_logged_in_clients_res'
-            #data['data'] = {"client_list": clients}
+
+        elif data['code'] == 'convert_currency_req':
+            data['code'] = 'convert_currency_res'
+            data['data'] = {"converted_amount": server_api.Convert(data['amount'],data['convert_to'])}
+
         else:
             logging.critical("WRONG CODE")
 
