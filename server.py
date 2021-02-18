@@ -46,6 +46,9 @@ try:
 
         elif data['code'] == 'convert_currency_req':
             data['code'] = 'convert_currency_res'
+            data['data'] = {"base_currency_code": truedata['base_currency_code']}
+            data['data'] = {'Amount': truedata['amount']}
+            data['data'] = {'Converted_to': truedata['convert_to']}
             data['data'] = {'Converted_amount': server_api.convert_currency(truedata['amount'], truedata['convert_to'])}
 
         else:
