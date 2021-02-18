@@ -5,39 +5,32 @@ import logging
 
 logging.basicConfig(filename='logs.log', level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s:')
 
-
-
 class Api:
     print("Downloading data from Api")
     while True:
         try:
             api = requests.get(config.address)
+            data = json.loads(api.text)
+            rates = data['rates']
         except Exception as E:
             logging.critical("Cannot pull api")
+            print("Cannot pull api")
             continue
         break
-    data = json.loads(api.text)
-    rates = data['rates']
-    #print(rates)
 
     def __init__(self, base):
-        self.base=base
-    def Check(self, filter):
-        answer={self.base : self.rates[filter[x]]}
-        #print(filter)
+        self.base = base
 
-        for x in range(len(filter)+1):
+    def check_conversion_rate(self, filter):
+        answer = {self.base: self.rates[self.base]}
+        for x in range(len(filter)):
             answer[filter[x]] = self.rates[filter[x]]
+        return answer
 
-        return(answer)
-
-    def Convert(self, amount, towhat):
-        return amount/self.rates[self.base]*self.rates[towhat]
-
-
-    def sayhello():
-        print("greetings from api")
+    def convert_currency(self, amount, towhat):
+        return amount / self.rates[self.base] * self.rates[towhat]
 
 
-A=Api("PLN")
-print(A.Check(["EUR", "GBP", "HUF", "CZK"]))
+#test
+#A=Api("PLN") #test
+#print(A.check_conversion_rate(["EUR", "GBP", "HUF", "CZK"])) #test

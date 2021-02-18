@@ -10,7 +10,7 @@ logging.basicConfig(filename='logs.log', level=logging.DEBUG, format='%(asctime)
 logging.info("Server starts")
 
 HOST = '192.168.0.40'
-PORT = 33001
+PORT = 33000
 BUFFER = 1024
 
 
@@ -28,25 +28,25 @@ try:
         message = client_socket.recv(BUFFER).decode("utf8")
         data = json.loads(message)
 
-        truedata=data['data']
-       #nibyapi=api.Api("a")
+        truedata = data['data']
+
         server_api = api.Api(truedata['base_currency_code'])
 
         if data['code'] == 'list_all_currencies_req':
-            data['data']=api.Api.rates
+            data['data'] = api.Api.rates
             logging.info("Sent list of currencies")
-            #nibyapi.work()
 
         elif data['code'] == 'check_conversion_rate_req':
-
-            print("tupowinnobycmojeapi:")
-            print(server_api.Check(truedata['base_currency_code']))
             data['code'] = 'check_conversion_rate_res'
-            data['data'] = {"rates": server_api.Check(truedata['filter'])}#, "id":userid['id']}
+            if truedata[filter] == "null":
+                data['data'] = api.Api.rates
+            else:
+                data['data'] = {"base_currency_code": truedata['base_currency_code']}
+                data['data'] = {"rates": server_api.check_conversion_rate(truedata['filter'])}
 
         elif data['code'] == 'convert_currency_req':
             data['code'] = 'convert_currency_res'
-            data['data'] = {'Converted_amount': server_api.Convert(data['amount'],data['convert_to'])}
+            data['data'] = {'Converted_amount': server_api.convert_currency(data['amount'], data['convert_to'])}
 
         else:
             logging.critical("WRONG CODE")

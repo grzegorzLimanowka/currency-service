@@ -1,9 +1,10 @@
 import socket
 import json
-import random
+import ast
+
 
 HOST = '192.168.0.40'
-PORT = 33001
+PORT = 33000
 BUFFER = 1024
 
 
@@ -20,8 +21,9 @@ data = json.loads(message)
 
 data['code'] = input('Code: ')
 if data['code'] == "check_conversion_rate_req":
-    base_currency_code = input('base_currency_code: ')
     filter = input('Filter: ')
+    filter = ast.literal_eval(filter)
+    base_currency_code = input('base_currency_code: ')
     data['data'] = {"base_currency_code": base_currency_code, "filter": filter}
 elif data['code'] == "check_conversion_rate_req":
     base_currency_code = input('Currency: ')
