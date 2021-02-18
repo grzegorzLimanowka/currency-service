@@ -38,7 +38,7 @@ try:
 
         elif data['code'] == 'check_conversion_rate_req':
             data['code'] = 'check_conversion_rate_res'
-            if truedata[filter] == "null":
+            if truedata['filter'] == "null":
                 data['data'] = api.Api.rates
             else:
                 data['data'] = {"base_currency_code": truedata['base_currency_code']}
@@ -46,10 +46,7 @@ try:
 
         elif data['code'] == 'convert_currency_req':
             data['code'] = 'convert_currency_res'
-            data['data'] = {"base_currency_code": truedata['base_currency_code']}
-            data['data'] = {'Amount': truedata['amount']}
-            data['data'] = {'Converted_to': truedata['convert_to']}
-            data['data'] = {'Converted_amount': server_api.convert_currency(truedata['amount'], truedata['convert_to'])}
+            data['data'] = {"base_currency_code": truedata['base_currency_code'],'Amount': truedata['amount'],'Converted_to': truedata['convert_to'],'Converted_amount': server_api.convert_currency(truedata['amount'], truedata['convert_to']),"Date":api.Api.data['date']}
 
         else:
             logging.critical("WRONG CODE")
