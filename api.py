@@ -28,9 +28,9 @@ class Api:
         return answer
 
     def convert_currency(self, amount, towhat):
-        return amount / self.rates[self.base] * self.rates[towhat]
+        return float(amount) / self.rates[self.base] * self.rates[towhat]
 
 
 #test
-#A=Api("PLN") #test
-#print(A.check_conversion_rate(["EUR", "GBP", "HUF", "CZK"])) #test
+A=Api("PLN") #test
+print(A.convert_currency(100,"USD")) #test

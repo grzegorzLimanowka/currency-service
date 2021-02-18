@@ -25,7 +25,7 @@ if data['code'] == "check_conversion_rate_req":
     filter = ast.literal_eval(filter)
     base_currency_code = input('base_currency_code: ')
     data['data'] = {"base_currency_code": base_currency_code, "filter": filter}
-elif data['code'] == "check_conversion_rate_req":
+elif data['code'] == "convert_currency_req":
     base_currency_code = input('Currency: ')
     amount = input('Amount: ')
     convert_to = input('Convert to: ')

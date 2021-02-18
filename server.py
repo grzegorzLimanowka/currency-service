@@ -46,7 +46,7 @@ try:
 
         elif data['code'] == 'convert_currency_req':
             data['code'] = 'convert_currency_res'
-            data['data'] = {'Converted_amount': server_api.convert_currency(data['amount'], data['convert_to'])}
+            data['data'] = {'Converted_amount': server_api.convert_currency(truedata['amount'], truedata['convert_to'])}
 
         else:
             logging.critical("WRONG CODE")
