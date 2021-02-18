@@ -41,8 +41,7 @@ try:
             if truedata['filter'] == "null":
                 data['data'] = api.Api.rates
             else:
-                data['data'] = {"base_currency_code": truedata['base_currency_code']}
-                data['data'] = {"rates": server_api.check_conversion_rate(truedata['filter'])}
+                data['data'] = {"base_currency_code": truedata['base_currency_code'],"rates": server_api.check_conversion_rate(truedata['filter'])}
 
         elif data['code'] == 'convert_currency_req':
             data['code'] = 'convert_currency_res'
