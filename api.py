@@ -5,21 +5,24 @@ import logging
 
 logging.basicConfig(filename='logs.log', level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s:')
 
-class Api:
-    print("Downloading data from Api")
-    while True:
-        try:
-            api = requests.get(config.address)
-            data = json.loads(api.text)
-            rates = data['rates']
-        except Exception as E:
-            logging.critical("Cannot pull api")
-            print("Cannot pull api")
-            continue
-        break
 
-    def __init__(self, base):
-        self.base = base
+class Api:
+
+    def __init__(self, base_currency):
+        self.base = base_currency
+        print("Downloading data from Api")  # might take some time
+        logging.info("Downloading data from Api")
+        while True:
+            try:
+                self.api = requests.get(config.address)
+                self.address=requests.get(config.address)
+                self.data = json.loads(self.address.text)
+                self.rates = self.data['rates']
+            except Exception as E:
+                logging.critical("Cannot pull data from API: " + str(E))
+                print(E)
+                continue
+            break
 
     def check_conversion_rate(self, filter):
         answer = {self.base: self.rates[self.base]}
@@ -29,8 +32,3 @@ class Api:
 
     def convert_currency(self, amount, towhat):
         return float(amount) / self.rates[self.base] * self.rates[towhat]
-
-
-#test
-A=Api("PLN") #test
-print(A.convert_currency(100,"USD")) #test

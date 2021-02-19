@@ -1,39 +1,35 @@
 import socket
-import json
 import ast
 
+class WSClient:
 
-HOST = '192.168.0.40'
-PORT = 33000
-BUFFER = 1024
+    def __init__(self, host, port):
+
+        self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.client_socket.connect((host, port))
+
+    def send_message(self, buffer):
+
+        message={}
+        message['code'] = input('Code: ')
+
+        if message['code'] == "check_conversion_rate_req":
+            filter = input('Filter: ')
+            filter = ast.literal_eval(filter)
+            base_currency_code = input('base_currency_code: ')
+            message['data'] = {"base_currency_code": base_currency_code, 'filter': filter}
+        elif message['code'] == "convert_currency_req":
+            base_currency_code = input('Currency: ')
+            amount = input('Amount: ')
+            convert_to = input('Convert to: ')
+            message['data'] = {"base_currency_code": base_currency_code, "amount": amount, "convert_to": convert_to}
+        else:
+            message['data'] = input('Data: ')
+
+        send = str(str(message).replace("\'", "\""))
+        self.client_socket.send(str.encode(send))
+        print(self.client_socket.recv(buffer).decode())
 
 
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client_socket.connect((HOST,PORT))
-
-message = '''
-{   
-
-}
-'''
-data = json.loads(message)
-
-
-data['code'] = input('Code: ')
-if data['code'] == "check_conversion_rate_req":
-    filter = input('Filter: ')
-    filter = ast.literal_eval(filter)
-    base_currency_code = input('base_currency_code: ')
-    data['data'] = {"base_currency_code": base_currency_code, "filter": filter}
-elif data['code'] == "convert_currency_req":
-    base_currency_code = input('Currency: ')
-    amount = input('Amount: ')
-    convert_to = input('Convert to: ')
-    data['data'] = {"base_currency_code": base_currency_code, "amount": amount, "convert_to": convert_to}
-else:
-    data['data'] = input('Data: ')
-
-dataSEND = str(str(data).replace("\'", "\""))
-
-client_socket.send(str.encode(dataSEND))
-print( client_socket.recv(BUFFER).decode())
+client = WSClient('192.168.0.40', 33000)
+client.send_message(1024)
