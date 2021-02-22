@@ -128,10 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-#confilct
-/.idea/currency-service.iml
-/.idea/inspectionProfiles/profiles_settings.xml
-/.idea/misc.xml
-/.idea/modules.xml
-/.idea/vcs.xml
+
 
