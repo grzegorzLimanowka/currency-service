@@ -7,7 +7,7 @@ import api
 api_test = api.Api("PLN")
 
 
-class firsttest(unittest.TestCase):
+class first_test(unittest.TestCase):
 
 
     def test_speed(self):
@@ -19,5 +19,6 @@ class firsttest(unittest.TestCase):
 
     def test_convert_currency(self):
         self.assertEqual(2.69766, api_test.convert_currency(10,"USD"))
+
 
 unittest.main()

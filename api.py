@@ -24,10 +24,11 @@ class Api:
             break
 
     def check_conversion_rate(self, filter):
+        answer = {self.base: self.rates[self.base]}
+
         if isinstance(filter, str):
-            answer = self.rates(filter)
+            answer[filter] = self.rates[filter]
         else:
-            answer = {self.base: self.rates[self.base]}
             for x in range(len(filter)):
                 answer[filter[x]] = self.rates[filter[x]]
 
@@ -35,7 +36,3 @@ class Api:
 
     def convert_currency(self, amount, towhat):
         return float(amount) / self.rates[self.base] * self.rates[towhat]
-
-# a=Api("PLN")
-# print(a.check_conversion_rate(["USD","EUR"]))
-# print(a.check_conversion_rate("USD"))
