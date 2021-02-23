@@ -10,7 +10,6 @@ class Api:
 
     def __init__(self, base_currency):
         self.base = base_currency
-        print("Downloading data from Api")  # might take some time
         logging.info("Downloading data from Api")
         while True:
             try:
@@ -25,10 +24,18 @@ class Api:
             break
 
     def check_conversion_rate(self, filter):
-        answer = {self.base: self.rates[self.base]}
-        for x in range(len(filter)):
-            answer[filter[x]] = self.rates[filter[x]]
+        if isinstance(filter, str):
+            answer = self.rates(filter)
+        else:
+            answer = {self.base: self.rates[self.base]}
+            for x in range(len(filter)):
+                answer[filter[x]] = self.rates[filter[x]]
+
         return answer
 
     def convert_currency(self, amount, towhat):
         return float(amount) / self.rates[self.base] * self.rates[towhat]
+
+# a=Api("PLN")
+# print(a.check_conversion_rate(["USD","EUR"]))
+# print(a.check_conversion_rate("USD"))
